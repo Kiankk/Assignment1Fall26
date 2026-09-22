@@ -42,6 +42,56 @@ public class TypingSession {
     }
 
     /**
+     * Applies one typed character to the current line.
+     *
+     * <p>The character is appended to the response and scored against the
+     * character it was meant to match. Characters typed past the end of the
+     * line are ignored so that the response can never be longer than the text
+     * being practised.</p>
+     *
+     * @param typed the character produced by the key the user pressed
+     * @return {@code true} if the character was accepted, {@code false} if the
+     *         line was already complete
+     */
+    public boolean type(char typed) {
+        String text = currentText.get();
+        String typedSoFar = response.get();
+        if (typedSoFar.length() >= text.length()) {
+            return false;
+        }
+        stats.record(typed == text.charAt(typedSoFar.length()));
+        response.set(typedSoFar + typed);
+        return true;
+    }
+
+    /**
+     * Removes the most recently typed character and withdraws its contribution
+     * to the accuracy counters.
+     *
+     * @return {@code true} if a character was removed, {@code false} if the
+     *         response was already empty
+     */
+    public boolean backspace() {
+        String typedSoFar = response.get();
+        if (typedSoFar.isEmpty()) {
+            return false;
+        }
+        response.set(typedSoFar.substring(0, typedSoFar.length() - 1));
+        stats.undo();
+        return true;
+    }
+
+    /**
+     * Reports whether the user has typed as many characters as the current
+     * line contains.
+     *
+     * @return {@code true} once the line has been typed to its full length
+     */
+    public boolean isComplete() {
+        return response.get().length() >= currentText.get().length();
+    }
+
+    /**
      * Moves to the next practice line, wrapping back to the first line after
      * the last one, and clears the typed response.
      */
