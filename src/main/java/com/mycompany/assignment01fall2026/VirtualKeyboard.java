@@ -34,7 +34,7 @@ public class VirtualKeyboard extends VBox {
         getStyleClass().add("virtual-keyboard");
         setSpacing(6);
         setAlignment(Pos.CENTER);
-        getChildren().addAll(numberRow(), topLetterRow());
+        getChildren().addAll(numberRow(), topLetterRow(), homeRow());
     }
 
     private HBox numberRow() {
@@ -70,6 +70,22 @@ public class VirtualKeyboard extends VBox {
                 key(KeyCode.OPEN_BRACKET, "[", 1),
                 key(KeyCode.CLOSE_BRACKET, "]", 1),
                 key(KeyCode.BACK_SLASH, "\\", 1.5));
+    }
+
+    private HBox homeRow() {
+        return row(
+                key(KeyCode.A, "A", 1.25),
+                key(KeyCode.S, "S", 1),
+                key(KeyCode.D, "D", 1),
+                key(KeyCode.F, "F", 1),
+                key(KeyCode.G, "G", 1),
+                key(KeyCode.H, "H", 1),
+                key(KeyCode.J, "J", 1),
+                key(KeyCode.K, "K", 1),
+                key(KeyCode.L, "L", 1),
+                key(KeyCode.SEMICOLON, ";", 1),
+                key(KeyCode.QUOTE, "'", 1),
+                key(KeyCode.ENTER, "Enter", 2.25));
     }
 
     private VirtualKey key(KeyCode code, String caption, double units) {
