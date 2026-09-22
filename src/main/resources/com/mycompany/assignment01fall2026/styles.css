@@ -1,0 +1,42 @@
+.root {
+    -fx-font-family: "Segoe UI", "Helvetica Neue", sans-serif;
+    -fx-font-size: 13px;
+    -fx-background-color: #f4f6f8;
+}
+
+.title-label {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1f2933;
+}
+
+.section-label {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #52606d;
+}
+
+.prompt-field,
+.response-field {
+    -fx-font-family: "Consolas", "Menlo", monospace;
+    -fx-font-size: 16px;
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
+    -fx-border-color: #cbd2d9;
+    -fx-padding: 8;
+}
+
+.prompt-field {
+    -fx-background-color: #e9eef3;
+    -fx-text-fill: #323f4b;
+}
+
+.response-field {
+    -fx-background-color: white;
+}
+
+.virtual-keyboard {
+    -fx-padding: 12;
+    -fx-background-color: #e1e7ec;
+    -fx-background-radius: 10;
+}
