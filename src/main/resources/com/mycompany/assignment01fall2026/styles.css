@@ -40,3 +40,20 @@
     -fx-background-color: #e1e7ec;
     -fx-background-radius: 10;
 }
+
+.virtual-key {
+    -fx-background-color: white;
+    -fx-background-radius: 6;
+    -fx-border-color: #b9c2cc;
+    -fx-border-radius: 6;
+    -fx-text-fill: #323f4b;
+    -fx-font-size: 12px;
+    -fx-padding: 8 0 8 0;
+}
+
+.virtual-key:key-down {
+    -fx-background-color: #2f6fdd;
+    -fx-border-color: #1f4fa6;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(47, 111, 221, 0.45), 8, 0.3, 0, 1);
+}
