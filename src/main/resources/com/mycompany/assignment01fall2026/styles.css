@@ -57,3 +57,38 @@
     -fx-text-fill: white;
     -fx-effect: dropshadow(gaussian, rgba(47, 111, 221, 0.45), 8, 0.3, 0, 1);
 }
+
+.key-value-label {
+    -fx-font-family: "Consolas", "Menlo", monospace;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1f2933;
+    -fx-background-color: white;
+    -fx-background-radius: 6;
+    -fx-border-color: #cbd2d9;
+    -fx-border-radius: 6;
+    -fx-padding: 6 14 6 14;
+    -fx-min-width: 120;
+    -fx-alignment: center;
+}
+
+.status-label {
+    -fx-font-size: 13px;
+    -fx-text-fill: #52606d;
+}
+
+.status-label.error {
+    -fx-text-fill: #d82c2c;
+    -fx-font-weight: bold;
+}
+
+.stats-label {
+    -fx-font-size: 13px;
+    -fx-text-fill: #323f4b;
+}
+
+.counter-label {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1f2933;
+}
