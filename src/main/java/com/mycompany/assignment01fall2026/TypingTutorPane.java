@@ -31,6 +31,7 @@ public class TypingTutorPane extends BorderPane {
     private final Button resetButton = new Button("Reset");
     private final Label keyValueLabel = new Label();
     private final Label statusLabel = new Label();
+    private final VirtualKeyboard keyboard = new VirtualKeyboard();
 
     /**
      * Builds the typing tutor interface.
@@ -52,7 +53,7 @@ public class TypingTutorPane extends BorderPane {
         keyRow.setAlignment(Pos.CENTER_LEFT);
         keyRow.setPadding(new Insets(0, 0, 12, 0));
 
-        VBox panel = new VBox(10, keyRow);
+        VBox panel = new VBox(10, keyRow, keyboard);
         panel.setAlignment(Pos.TOP_CENTER);
         return panel;
     }
