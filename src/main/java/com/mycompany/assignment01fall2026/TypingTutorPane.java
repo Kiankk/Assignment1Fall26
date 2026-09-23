@@ -1,10 +1,13 @@
 package com.mycompany.assignment01fall2026;
 
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 /**
@@ -23,6 +26,8 @@ public class TypingTutorPane extends BorderPane {
     private final TypingSession session = new TypingSession(TypingTexts.all());
     private final TextField promptField = new TextField();
     private final TextField responseField = new TextField();
+    private final Label counterLabel = new Label();
+    private final Button nextButton = new Button("Next");
 
     /**
      * Builds the typing tutor interface.
@@ -30,6 +35,20 @@ public class TypingTutorPane extends BorderPane {
     public TypingTutorPane() {
         setPadding(new Insets(16));
         setTop(buildTextPanel());
+        setBottom(buildControlBar());
+    }
+
+    private Node buildControlBar() {
+        counterLabel.getStyleClass().add("counter-label");
+        counterLabel.textProperty().bind(session.positionLabel());
+
+        nextButton.setFocusTraversable(false);
+        nextButton.setOnAction(event -> session.next());
+
+        HBox bar = new HBox(10, counterLabel, nextButton);
+        bar.setAlignment(Pos.CENTER_LEFT);
+        bar.setPadding(new Insets(14, 0, 0, 0));
+        return bar;
     }
 
     private Node buildTextPanel() {
