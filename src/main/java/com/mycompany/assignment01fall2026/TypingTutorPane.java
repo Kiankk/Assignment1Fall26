@@ -1,5 +1,6 @@
 package com.mycompany.assignment01fall2026;
 
+import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -8,6 +9,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
 /**
@@ -32,6 +35,7 @@ public class TypingTutorPane extends BorderPane {
     private final Label keyValueLabel = new Label();
     private final Label statusLabel = new Label();
     private final VirtualKeyboard keyboard = new VirtualKeyboard();
+    private final Label statsLabel = new Label();
 
     /**
      * Builds the typing tutor interface.
@@ -41,6 +45,14 @@ public class TypingTutorPane extends BorderPane {
         setTop(buildTextPanel());
         setCenter(buildKeyPanel());
         setBottom(buildControlBar());
+    }
+
+    private String describeAccuracy() {
+        TypingStats stats = session.stats();
+        return String.format("Correct: %d    Incorrect: %d    Accuracy: %.0f%%",
+                stats.correctProperty().get(),
+                stats.incorrectProperty().get(),
+                stats.accuracy() * 100);
     }
 
     private Node buildKeyPanel() {
@@ -68,7 +80,16 @@ public class TypingTutorPane extends BorderPane {
         resetButton.setFocusTraversable(false);
         resetButton.setOnAction(event -> session.reset());
 
-        HBox bar = new HBox(10, counterLabel, nextButton, resetButton);
+        statsLabel.getStyleClass().add("stats-label");
+        statsLabel.textProperty().bind(Bindings.createStringBinding(
+                this::describeAccuracy,
+                session.stats().correctProperty(),
+                session.stats().incorrectProperty()));
+
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+
+        HBox bar = new HBox(10, counterLabel, nextButton, resetButton, spacer, statsLabel);
         bar.setAlignment(Pos.CENTER_LEFT);
         bar.setPadding(new Insets(14, 0, 0, 0));
         return bar;
