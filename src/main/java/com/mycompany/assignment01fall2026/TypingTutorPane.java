@@ -29,6 +29,8 @@ public class TypingTutorPane extends BorderPane {
     private final Label counterLabel = new Label();
     private final Button nextButton = new Button("Next");
     private final Button resetButton = new Button("Reset");
+    private final Label keyValueLabel = new Label();
+    private final Label statusLabel = new Label();
 
     /**
      * Builds the typing tutor interface.
@@ -36,7 +38,23 @@ public class TypingTutorPane extends BorderPane {
     public TypingTutorPane() {
         setPadding(new Insets(16));
         setTop(buildTextPanel());
+        setCenter(buildKeyPanel());
         setBottom(buildControlBar());
+    }
+
+    private Node buildKeyPanel() {
+        Label caption = new Label("LAST KEY");
+        caption.getStyleClass().add("section-label");
+        keyValueLabel.getStyleClass().add("key-value-label");
+        statusLabel.getStyleClass().add("status-label");
+
+        HBox keyRow = new HBox(10, caption, keyValueLabel, statusLabel);
+        keyRow.setAlignment(Pos.CENTER_LEFT);
+        keyRow.setPadding(new Insets(0, 0, 12, 0));
+
+        VBox panel = new VBox(10, keyRow);
+        panel.setAlignment(Pos.TOP_CENTER);
+        return panel;
     }
 
     private Node buildControlBar() {
