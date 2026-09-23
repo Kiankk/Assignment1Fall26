@@ -28,6 +28,7 @@ public class TypingTutorPane extends BorderPane {
     private final TextField responseField = new TextField();
     private final Label counterLabel = new Label();
     private final Button nextButton = new Button("Next");
+    private final Button resetButton = new Button("Reset");
 
     /**
      * Builds the typing tutor interface.
@@ -45,7 +46,10 @@ public class TypingTutorPane extends BorderPane {
         nextButton.setFocusTraversable(false);
         nextButton.setOnAction(event -> session.next());
 
-        HBox bar = new HBox(10, counterLabel, nextButton);
+        resetButton.setFocusTraversable(false);
+        resetButton.setOnAction(event -> session.reset());
+
+        HBox bar = new HBox(10, counterLabel, nextButton, resetButton);
         bar.setAlignment(Pos.CENTER_LEFT);
         bar.setPadding(new Insets(14, 0, 0, 0));
         return bar;
