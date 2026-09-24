@@ -30,6 +30,7 @@ import javafx.scene.layout.VBox;
 public class TypingTutorPane extends BorderPane {
 
     private static final String ERROR_STYLE_CLASS = "error";
+    private static final char DELETE_CHARACTER = '';
 
     private final TypingSession session = new TypingSession(TypingTexts.all());
     private final TextField promptField = new TextField();
@@ -43,6 +44,9 @@ public class TypingTutorPane extends BorderPane {
     private final Label statsLabel = new Label();
     private final EventHandler<KeyEvent> pressedHandler = this::handleKeyPressed;
     private final EventHandler<KeyEvent> releasedHandler = this::handleKeyReleased;
+    private final EventHandler<KeyEvent> typedHandler = this::handleKeyTyped;
+
+    private boolean lastKeyWasHandled;
 
     /**
      * Builds the typing tutor interface.
@@ -60,10 +64,12 @@ public class TypingTutorPane extends BorderPane {
             if (oldScene != null) {
                 oldScene.removeEventHandler(KeyEvent.KEY_PRESSED, pressedHandler);
                 oldScene.removeEventHandler(KeyEvent.KEY_RELEASED, releasedHandler);
+                oldScene.removeEventHandler(KeyEvent.KEY_TYPED, typedHandler);
             }
             if (newScene != null) {
                 newScene.addEventHandler(KeyEvent.KEY_PRESSED, pressedHandler);
                 newScene.addEventHandler(KeyEvent.KEY_RELEASED, releasedHandler);
+                newScene.addEventHandler(KeyEvent.KEY_TYPED, typedHandler);
             }
         });
     }
@@ -71,7 +77,8 @@ public class TypingTutorPane extends BorderPane {
     private void handleKeyPressed(KeyEvent event) {
         KeyCode code = event.getCode();
         keyValueLabel.setText(keyboard.captionOf(code));
-        if (!keyboard.handles(code)) {
+        lastKeyWasHandled = keyboard.handles(code);
+        if (!lastKeyWasHandled) {
             showError("Not handled");
             return;
         }
@@ -89,6 +96,18 @@ public class TypingTutorPane extends BorderPane {
     private void clearStatus() {
         statusLabel.setText("");
         statusLabel.getStyleClass().remove(ERROR_STYLE_CLASS);
+    }
+
+    private void handleKeyTyped(KeyEvent event) {
+        String character = event.getCharacter();
+        if (!lastKeyWasHandled || character.isEmpty()) {
+            return;
+        }
+        char typed = character.charAt(0);
+        if (typed < ' ' || typed == DELETE_CHARACTER) {
+            return;
+        }
+        session.type(typed);
     }
 
     private void handleKeyReleased(KeyEvent event) {
