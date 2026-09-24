@@ -132,6 +132,18 @@ public class VirtualKeyboard extends VBox {
     }
 
     /**
+     * Returns the caption shown on the button for the given code.
+     *
+     * @param code the code of a physical key
+     * @return the caption of the matching button, or the code's own name when
+     *         the keyboard has no button for it
+     */
+    public String captionOf(KeyCode code) {
+        List<VirtualKey> keys = keysByCode.get(code);
+        return keys == null || keys.isEmpty() ? code.getName() : keys.get(0).getText();
+    }
+
+    /**
      * Lights up every button that stands for the given code.
      *
      * @param code the code of the physical key being held down

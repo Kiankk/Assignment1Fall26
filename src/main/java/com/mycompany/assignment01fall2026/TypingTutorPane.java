@@ -3,10 +3,12 @@ package com.mycompany.assignment01fall2026;
 import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -36,6 +38,7 @@ public class TypingTutorPane extends BorderPane {
     private final Label statusLabel = new Label();
     private final VirtualKeyboard keyboard = new VirtualKeyboard();
     private final Label statsLabel = new Label();
+    private final EventHandler<KeyEvent> pressedHandler = this::handleKeyPressed;
 
     /**
      * Builds the typing tutor interface.
@@ -45,6 +48,23 @@ public class TypingTutorPane extends BorderPane {
         setTop(buildTextPanel());
         setCenter(buildKeyPanel());
         setBottom(buildControlBar());
+        listenForKeyEvents();
+    }
+
+    private void listenForKeyEvents() {
+        sceneProperty().addListener((observable, oldScene, newScene) -> {
+            if (oldScene != null) {
+                oldScene.removeEventHandler(KeyEvent.KEY_PRESSED, pressedHandler);
+            }
+            if (newScene != null) {
+                newScene.addEventHandler(KeyEvent.KEY_PRESSED, pressedHandler);
+            }
+        });
+    }
+
+    private void handleKeyPressed(KeyEvent event) {
+        keyboard.press(event.getCode());
+        keyValueLabel.setText(keyboard.captionOf(event.getCode()));
     }
 
     private String describeAccuracy() {
