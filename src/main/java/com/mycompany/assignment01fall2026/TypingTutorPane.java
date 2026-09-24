@@ -39,6 +39,7 @@ public class TypingTutorPane extends BorderPane {
     private final VirtualKeyboard keyboard = new VirtualKeyboard();
     private final Label statsLabel = new Label();
     private final EventHandler<KeyEvent> pressedHandler = this::handleKeyPressed;
+    private final EventHandler<KeyEvent> releasedHandler = this::handleKeyReleased;
 
     /**
      * Builds the typing tutor interface.
@@ -55,9 +56,11 @@ public class TypingTutorPane extends BorderPane {
         sceneProperty().addListener((observable, oldScene, newScene) -> {
             if (oldScene != null) {
                 oldScene.removeEventHandler(KeyEvent.KEY_PRESSED, pressedHandler);
+                oldScene.removeEventHandler(KeyEvent.KEY_RELEASED, releasedHandler);
             }
             if (newScene != null) {
                 newScene.addEventHandler(KeyEvent.KEY_PRESSED, pressedHandler);
+                newScene.addEventHandler(KeyEvent.KEY_RELEASED, releasedHandler);
             }
         });
     }
@@ -65,6 +68,10 @@ public class TypingTutorPane extends BorderPane {
     private void handleKeyPressed(KeyEvent event) {
         keyboard.press(event.getCode());
         keyValueLabel.setText(keyboard.captionOf(event.getCode()));
+    }
+
+    private void handleKeyReleased(KeyEvent event) {
+        keyboard.release(event.getCode());
     }
 
     private String describeAccuracy() {
