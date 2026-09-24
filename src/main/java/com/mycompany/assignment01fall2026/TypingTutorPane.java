@@ -89,6 +89,11 @@ public class TypingTutorPane extends BorderPane {
         }
     }
 
+    private void showMessage(String message) {
+        statusLabel.setText(message);
+        statusLabel.getStyleClass().remove(ERROR_STYLE_CLASS);
+    }
+
     private void showError(String message) {
         statusLabel.setText(message);
         if (!statusLabel.getStyleClass().contains(ERROR_STYLE_CLASS)) {
@@ -111,6 +116,9 @@ public class TypingTutorPane extends BorderPane {
             return;
         }
         session.type(typed);
+        if (session.isComplete()) {
+            showMessage("Line complete. Press Next for the following text.");
+        }
     }
 
     private void handleKeyReleased(KeyEvent event) {
