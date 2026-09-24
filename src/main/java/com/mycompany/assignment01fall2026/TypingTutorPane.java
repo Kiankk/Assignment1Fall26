@@ -5,6 +5,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -79,6 +80,19 @@ public class TypingTutorPane extends BorderPane {
                 newScene.addEventHandler(KeyEvent.KEY_PRESSED, pressedHandler);
                 newScene.addEventHandler(KeyEvent.KEY_RELEASED, releasedHandler);
                 newScene.addEventHandler(KeyEvent.KEY_TYPED, typedHandler);
+                releaseKeysWhenWindowLosesFocus(newScene);
+            }
+        });
+    }
+
+    private void releaseKeysWhenWindowLosesFocus(Scene scene) {
+        scene.windowProperty().addListener((observable, oldWindow, newWindow) -> {
+            if (newWindow != null) {
+                newWindow.focusedProperty().addListener((focusObservable, wasFocused, isFocused) -> {
+                    if (!isFocused) {
+                        keyboard.releaseAll();
+                    }
+                });
             }
         });
     }
