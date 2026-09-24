@@ -84,6 +84,9 @@ public class TypingTutorPane extends BorderPane {
         }
         keyboard.press(code);
         clearStatus();
+        if (code == KeyCode.BACK_SPACE) {
+            session.backspace();
+        }
     }
 
     private void showError(String message) {
