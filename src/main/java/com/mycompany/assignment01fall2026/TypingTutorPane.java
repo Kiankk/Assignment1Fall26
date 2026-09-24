@@ -8,6 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -27,6 +28,8 @@ import javafx.scene.layout.VBox;
  * @author Kian Dehghani
  */
 public class TypingTutorPane extends BorderPane {
+
+    private static final String ERROR_STYLE_CLASS = "error";
 
     private final TypingSession session = new TypingSession(TypingTexts.all());
     private final TextField promptField = new TextField();
@@ -66,8 +69,26 @@ public class TypingTutorPane extends BorderPane {
     }
 
     private void handleKeyPressed(KeyEvent event) {
-        keyboard.press(event.getCode());
-        keyValueLabel.setText(keyboard.captionOf(event.getCode()));
+        KeyCode code = event.getCode();
+        keyValueLabel.setText(keyboard.captionOf(code));
+        if (!keyboard.handles(code)) {
+            showError("Not handled");
+            return;
+        }
+        keyboard.press(code);
+        clearStatus();
+    }
+
+    private void showError(String message) {
+        statusLabel.setText(message);
+        if (!statusLabel.getStyleClass().contains(ERROR_STYLE_CLASS)) {
+            statusLabel.getStyleClass().add(ERROR_STYLE_CLASS);
+        }
+    }
+
+    private void clearStatus() {
+        statusLabel.setText("");
+        statusLabel.getStyleClass().remove(ERROR_STYLE_CLASS);
     }
 
     private void handleKeyReleased(KeyEvent event) {
