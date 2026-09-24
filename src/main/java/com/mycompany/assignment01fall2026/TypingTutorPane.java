@@ -53,10 +53,19 @@ public class TypingTutorPane extends BorderPane {
      */
     public TypingTutorPane() {
         setPadding(new Insets(16));
+        setFocusTraversable(true);
         setTop(buildTextPanel());
         setCenter(buildKeyPanel());
         setBottom(buildControlBar());
         listenForKeyEvents();
+    }
+
+    private void startLine(Runnable change) {
+        change.run();
+        keyboard.releaseAll();
+        keyValueLabel.setText("");
+        clearStatus();
+        requestFocus();
     }
 
     private void listenForKeyEvents() {
@@ -153,10 +162,10 @@ public class TypingTutorPane extends BorderPane {
         counterLabel.textProperty().bind(session.positionLabel());
 
         nextButton.setFocusTraversable(false);
-        nextButton.setOnAction(event -> session.next());
+        nextButton.setOnAction(event -> startLine(session::next));
 
         resetButton.setFocusTraversable(false);
-        resetButton.setOnAction(event -> session.reset());
+        resetButton.setOnAction(event -> startLine(session::reset));
 
         statsLabel.getStyleClass().add("stats-label");
         statsLabel.textProperty().bind(Bindings.createStringBinding(
