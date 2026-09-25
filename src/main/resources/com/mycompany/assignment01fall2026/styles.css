@@ -92,3 +92,9 @@
     -fx-font-weight: bold;
     -fx-text-fill: #1f2933;
 }
+
+.hint-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #616e7c;
+    -fx-padding: 0 0 6 0;
+}

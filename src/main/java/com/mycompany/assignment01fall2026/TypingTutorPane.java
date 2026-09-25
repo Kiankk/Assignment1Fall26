@@ -196,6 +196,10 @@ public class TypingTutorPane extends BorderPane {
         Label title = new Label("Typing Tutor");
         title.getStyleClass().add("title-label");
 
+        Label hint = new Label("Type the line shown below. Use Backspace to fix a mistake, "
+                + "Next for the following line and Reset to start over.");
+        hint.getStyleClass().add("hint-label");
+
         Label promptCaption = new Label("TEXT TO TYPE");
         promptCaption.getStyleClass().add("section-label");
         promptField.getStyleClass().add("prompt-field");
@@ -210,8 +214,10 @@ public class TypingTutorPane extends BorderPane {
         responseField.setFocusTraversable(false);
         responseField.textProperty().bind(session.responseProperty());
 
-        VBox panel = new VBox(6, title, promptCaption, promptField, responseCaption, responseField,
-                buildKeyRow());
+        Node keyRow = buildKeyRow();
+        VBox panel = new VBox(6, title, hint, promptCaption, promptField, responseCaption, responseField,
+                keyRow);
+        VBox.setMargin(keyRow, new Insets(10, 0, 0, 0));
         panel.setPadding(new Insets(0, 0, 14, 0));
         return panel;
     }
