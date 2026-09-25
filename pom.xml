@@ -28,6 +28,17 @@
                 </configuration>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.6.3</version>
+                <configuration>
+                    <doctitle>Typing Tutor</doctitle>
+                    <windowtitle>Typing Tutor</windowtitle>
+                    <author>true</author>
+                    <notimestamp>true</notimestamp>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
