@@ -56,7 +56,7 @@ public class TypingTutorPane extends BorderPane {
         setPadding(new Insets(16));
         setFocusTraversable(true);
         setTop(buildTextPanel());
-        setCenter(buildKeyPanel());
+        setCenter(keyboard);
         setBottom(buildControlBar());
         listenForKeyEvents();
     }
@@ -156,7 +156,7 @@ public class TypingTutorPane extends BorderPane {
                 stats.accuracy() * 100);
     }
 
-    private Node buildKeyPanel() {
+    private Node buildKeyRow() {
         Label caption = new Label("LAST KEY");
         caption.getStyleClass().add("section-label");
         keyValueLabel.getStyleClass().add("key-value-label");
@@ -164,11 +164,7 @@ public class TypingTutorPane extends BorderPane {
 
         HBox keyRow = new HBox(10, caption, keyValueLabel, statusLabel);
         keyRow.setAlignment(Pos.CENTER_LEFT);
-        keyRow.setPadding(new Insets(0, 0, 12, 0));
-
-        VBox panel = new VBox(10, keyRow, keyboard);
-        panel.setAlignment(Pos.TOP_CENTER);
-        return panel;
+        return keyRow;
     }
 
     private Node buildControlBar() {
@@ -214,7 +210,8 @@ public class TypingTutorPane extends BorderPane {
         responseField.setFocusTraversable(false);
         responseField.textProperty().bind(session.responseProperty());
 
-        VBox panel = new VBox(6, title, promptCaption, promptField, responseCaption, responseField);
+        VBox panel = new VBox(6, title, promptCaption, promptField, responseCaption, responseField,
+                buildKeyRow());
         panel.setPadding(new Insets(0, 0, 14, 0));
         return panel;
     }
